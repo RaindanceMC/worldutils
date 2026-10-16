@@ -157,7 +157,9 @@ class BundleJarTest {
             for (Bundled module : BUNDLE) {
                 Path classes = Path.of("..", module.directory(), "target", "classes");
                 if (!Files.isDirectory(classes)) {
-                    throw new AssertionError(module.id() + " has no target/classes — build it first");
+                    // Not built in this repository: it came out of the registry, where a release never changes —
+                    // only a module built here and installed over an older copy can be shaded stale.
+                    continue;
                 }
                 try (var walk = Files.walk(classes)) {
                     for (Path built : walk.filter(path -> path.toString().endsWith(".class")).toList()) {
@@ -189,33 +191,21 @@ class BundleJarTest {
         assertThat(claimedBy).containsKeys("worldgate", "w", "dim", "worlds");
     }
 
-    private static final Pattern DECLARED = Pattern.compile("ModuleCommand\\.of\\(\\s*\"([^\"]+)\"");
-    private static final Pattern ALIASED = Pattern.compile("\\.aliased\\(([^)]*)\\)");
-    private static final Pattern QUOTED = Pattern.compile("\"([^\"]+)\"");
-
+    /**
+     * The commands a module declares, asked of the module itself — what the wrapper registers at bootstrap. Read off
+     * the classpath rather than off source files: the bundled modules live in repositories of their own.
+     */
     private static List<String> commandNamesOf(Bundled module) {
-        Path sources = Path.of("..", module.directory(), "src", "main", "java", "de", "raindancer", "modules",
-                module.pack());
-        List<String> names = new ArrayList<>();
-        try (Stream<Path> files = Files.walk(sources)) {
-            for (Path file : files.filter(path -> path.getFileName().toString().endsWith("Commands.java")).toList()) {
-                String source = Files.readString(file);
-                Matcher declared = DECLARED.matcher(source);
-                while (declared.find()) {
-                    names.add(declared.group(1));
-                }
-                Matcher aliased = ALIASED.matcher(source);
-                while (aliased.find()) {
-                    Matcher quoted = QUOTED.matcher(aliased.group(1));
-                    while (quoted.find()) {
-                        names.add(quoted.group(1));
-                    }
-                }
-            }
-        } catch (IOException unreadable) {
-            throw new AssertionError("could not read " + sources, unreadable);
+        String className = "de.raindancer.modules." + module.pack() + "." + module.moduleClass();
+        try {
+            de.raindancer.modules.api.FlexModule flex = (de.raindancer.modules.api.FlexModule) Class.forName(className)
+                    .getDeclaredConstructor().newInstance();
+            List<String> names = new ArrayList<>();
+            flex.commands().forEach(command -> names.addAll(command.names()));
+            return names;
+        } catch (ReflectiveOperationException missing) {
+            throw new AssertionError("could not ask " + className + " for its commands", missing);
         }
-        return names;
     }
 
     @Test
