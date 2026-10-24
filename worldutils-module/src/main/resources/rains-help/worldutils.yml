@@ -1,0 +1,45 @@
+id: worldutils
+title: Switching worlds & dimensions
+summary: "Go to another world with /w, or to the same place in another dimension with /dim."
+intro: |
+  Staff-grade teleporting between worlds. If you can read this, somebody trusts you with it.
+icon: COMPASS
+category: Worlds
+order: 10
+module: worldutils
+when: "@perm:rainsworldutils.world || @perm:rainsworldutils.dimension"
+aliases: [w, wtp, dim, dimension, world, worlds]
+keywords: [teleport, nether, end, overworld, selector, send]
+commands: [w, dim]
+related: [worldutils-admin]
+sections:
+  - question: How do I go to another world?
+    title: /w
+    permission: rainsworldutils.world
+    text: |
+      {cmd:/w} lists every loaded world — click one to go. {cmd:/w <world>} takes you there{if:worldutils:remember-last-position}, back where you last stood in that world (or its spawn if you never were){else}, to the world's spawn{/if}.
+  - question: How do I send somebody else?
+    title: Sending others
+    permission: rainsworldutils.world.others
+    text: |
+      {cmd:/w <world> <player or selector>}, for example @a for everybody. You only hear about refusals — not forty lines saying it worked. From the console, say who.
+  - question: How do I change dimension?
+    title: /dim
+    permission: rainsworldutils.dimension
+    text: |
+      {cmd:/dim overworld|nether|end} takes you to the matching place in that dimension of the world you are in. If the world has no such dimension loaded you are told. A locked end refuses here exactly as a portal does.
+  - question: How do I send somebody to a dimension?
+    title: /dim for others
+    permission: rainsworldutils.dimension.others
+    text: |
+      {cmd:/dim <dimension> <player or selector>}. Players already there, already travelling or offline are skipped with a note.
+  - question: Where will I land?
+    title: Landing
+    text: |
+      {if:worldutils:safe-arrival}The nearest spot you can stand on without suffocating, falling or burning, searching up to <white>{setting:worldutils:search-radius|count}</white> blocks sideways. If there is none, nobody is moved and you are told.{else}Exactly on the target coordinates — no safe-ground search on this server.{/if}
+      The move is recorded, so {cmd:/back} knows where you came from.
+  - question: Do portals work in worlds made here?
+    title: Portals
+    when: worldutils:link-portals
+    text: |
+      Yes: a portal in a world made with /worlds leads to that world's own _nether and _the_end when they exist, not the server's. Items and mobs through them follow. The End's exit portal puts you at your respawn point if it is in that overworld, else its spawn.

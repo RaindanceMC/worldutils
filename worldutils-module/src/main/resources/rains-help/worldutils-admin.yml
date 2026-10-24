@@ -1,0 +1,39 @@
+id: worldutils-admin
+title: Creating & resetting worlds
+summary: "Create, reset and delete worlds (alone or as an overworld/nether/end family) and read their seed history."
+intro: |
+  Making worlds is fun. Deleting them is permanent. Both are one command away.
+icon: GRASS_BLOCK
+category: Staff
+order: 10
+module: worldutils
+permission: rainsworldutils.admin
+aliases: [worlds, worldutils, wu, seeds, regen]
+keywords: [create, delete, reset, regenerate, seed, family, nether, end, world]
+commands: [worlds]
+related: [worldutils]
+sections:
+  - question: How do I see the worlds?
+    title: List and info
+    text: |
+      {cmd:/worlds list} shows every loaded world (click to go), {cmd:/worlds info <world>} its dimension, seed, players, its family and whether it was made with /worlds.
+  - question: How do I make a world?
+    title: Create
+    text: |
+      {cmd:/worlds create <name> [overworld|nether|end|family] [seed]}. Names: lower-case letters, digits, _ . and -. <b>family</b> makes the overworld, nether and end together from one seed (name, name_nether, name_the_end). A random seed is used unless you give one. The seed is shown and clickable to copy.
+  - question: How do I reset a world?
+    title: Regen
+    text: |
+      {cmd:/worlds regen <world> [same|random|seed] [family] [confirm]}. Anybody inside is moved out first, the world is deleted and made again. Players get a confirmation screen; the console must repeat the command with confirm. The server's own worlds cannot be reset while running — stop the server and delete the folder instead.
+  - question: How do I delete a world?
+    title: Delete
+    text: |
+      {cmd:/worlds delete <world> [family] [confirm]} deletes it for good. Its seeds are kept.
+  - question: Can I get an old seed back?
+    title: Seed history
+    text: |
+      {cmd:/worlds seeds <world>} lists every seed the world has had (also for a deleted one), newest first, with when and why; click a seed to copy it or to prepare a reset with it.
+  - question: Are these commands logged?
+    title: Audit
+    text: |
+      Yes, {cmd:/worlds} usage is audited. Permission: rainsworldutils.admin (staff by default).
