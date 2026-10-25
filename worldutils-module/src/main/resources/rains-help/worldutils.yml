@@ -43,3 +43,8 @@ sections:
     when: worldutils:link-portals
     text: |
       Yes: a portal in a world made with /worlds leads to that world's own _nether and _the_end when they exist, not the server's. Items and mobs through them follow. The End's exit portal puts you at your respawn point if it is in that overworld, else its spawn.
+  - question: Do the Nether and End have a border?
+    title: Borders
+    when: worldutils:match-dimension-borders
+    text: |
+      The same as in their overworld: same size, same centre. Change the overworld's border and the Nether's and the End's follow.

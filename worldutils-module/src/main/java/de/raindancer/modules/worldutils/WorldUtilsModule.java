@@ -3,11 +3,13 @@ package de.raindancer.modules.worldutils;
 import de.raindancer.core.RainsCore;
 import de.raindancer.core.data.settings.SettingsStore;
 import de.raindancer.core.platform.log.LogChannel;
+import de.raindancer.core.platform.util.Scheduling;
 import de.raindancer.core.world.teleport.Travel;
 import de.raindancer.modules.api.FlexModule;
 import de.raindancer.modules.api.ModuleCommand;
 import de.raindancer.modules.api.ModuleContext;
 import de.raindancer.modules.api.ModuleInfo;
+import de.raindancer.modules.worldutils.listener.DimensionBorderListener;
 import de.raindancer.modules.worldutils.listener.LastPositionListener;
 import de.raindancer.modules.worldutils.listener.PortalLinkListener;
 import de.raindancer.modules.worldutils.service.WorldAdminService;
@@ -32,7 +34,7 @@ import java.util.List;
  */
 public final class WorldUtilsModule implements FlexModule {
 
-    private static final ModuleInfo INFO = ModuleInfo.of("worldutils", "World Utils", "0.5.0")
+    private static final ModuleInfo INFO = ModuleInfo.of("worldutils", "World Utils", "0.6.0")
             .describedAs("Switch worlds and dimensions, and create, reset or delete worlds with a "
                     + "chosen seed and a seed history")
             .by("Raindancer118");
@@ -82,6 +84,11 @@ public final class WorldUtilsModule implements FlexModule {
 
         context.listener(new LastPositionListener(positions, settings::current));
         context.listener(new PortalLinkListener(managed, settings::current, server::getWorld));
+        DimensionBorderListener borders = new DimensionBorderListener(settings::current, server::getWorld,
+                task -> Scheduling.global(context.plugin(), task));
+        context.listener(borders);
+        borders.matchAll(server.getWorlds());
+        settings.onChange(changed -> borders.matchAll(server.getWorlds()));
 
         WorldUtilsCommands.ready(new WorldUtilsServices(server, core.messages(), context.chat().brand(),
                 settings::current, travelling, admin));
