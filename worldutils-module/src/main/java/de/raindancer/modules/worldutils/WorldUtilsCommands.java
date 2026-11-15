@@ -32,24 +32,24 @@ public final class WorldUtilsCommands {
                 ModuleCommand.of("w", "Go to another world, or send somebody there",
                                 new WorldCommand(WorldUtilsCommands::require))
                         .aliased("wtp")
-                        .taking("w — every loaded world, click one to go",
-                                "w <world> — go there, back where you last stood in it",
-                                "w <world> <player or selector> — send them")
+                        .taking("w: every loaded world, click one to go",
+                                "w <world>: go there, back where you last stood in it",
+                                "w <world> <player or selector>: send them")
                         .needing(PermissionNodes.WORLD),
                 ModuleCommand.of("dim", "Go to the same place in another dimension",
                                 new DimensionCommand(WorldUtilsCommands::require))
                         .aliased("dimension")
-                        .taking("dim <overworld|nether|end> — the matching place, in this world's dimension",
-                                "dim <overworld|nether|end> <player or selector> — send them")
+                        .taking("dim <overworld|nether|end>: the matching place, in this world's dimension",
+                                "dim <overworld|nether|end> <player or selector>: send them")
                         .needing(PermissionNodes.DIMENSION),
                 ModuleCommand.of("worlds", "Create, reset or delete worlds, and look up their seeds",
                                 new WorldsCommand(WorldUtilsCommands::require))
                         .aliased("worldutils", "wu")
-                        .taking("worlds list — every loaded world",
+                        .taking("worlds list: every loaded world",
                                 "worlds create <name> [overworld|nether|end|family] [seed]",
                                 "worlds regen <world> [same|random|seed] [family]",
                                 "worlds delete <world> [family]",
-                                "worlds seeds <world> — every seed it has had",
+                                "worlds seeds <world>: every seed it has had",
                                 "worlds info <world>")
                         .needing(PermissionNodes.ADMIN)
                         .auditUsage());
