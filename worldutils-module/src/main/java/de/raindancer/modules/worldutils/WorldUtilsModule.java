@@ -59,8 +59,6 @@ public final class WorldUtilsModule implements FlexModule {
         // jar root, and join-classpath makes a root lookup a race between two files.
         core.messages().defineFrom(WorldUtilsModule.class.getResourceAsStream("messages.yml"),
                 context.chat().brand()::chatPrefix);
-        // The same lines said plainly, for a server whose Message tone is SERIOUS.
-        core.messages().seriousFrom(WorldUtilsModule.class.getResourceAsStream("messages-serious.yml"));
 
         int registered = PermissionNodes.register(server);
         if (registered > 0) {
