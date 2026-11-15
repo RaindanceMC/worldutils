@@ -2,7 +2,7 @@ id: worldutils-admin
 title: Creating & resetting worlds
 summary: "Create, reset and delete worlds (alone or as an overworld/nether/end family) and read their seed history."
 intro: |
-  Making worlds is fun. Deleting them is permanent. Both are one command away.
+  Creating a world is easy. Deleting one is permanent.
 icon: GRASS_BLOCK
 category: Staff
 order: 10
@@ -24,7 +24,7 @@ sections:
   - question: How do I reset a world?
     title: Regen
     text: |
-      {cmd:/worlds regen <world> [same|random|seed] [family] [confirm]}. Anybody inside is moved out first, the world is deleted and made again. Players get a confirmation screen; the console must repeat the command with confirm. The server's own worlds cannot be reset while running — stop the server and delete the folder instead.
+      {cmd:/worlds regen <world> [same|random|seed] [family] [confirm]}. Anybody inside is moved out first, the world is deleted and made again. Players get a confirmation screen; the console must repeat the command with confirm. The server's own worlds cannot be reset while running. Stop the server and delete the folder instead.
   - question: How do I delete a world?
     title: Delete
     text: |
@@ -32,7 +32,7 @@ sections:
   - question: Can I get an old seed back?
     title: Seed history
     text: |
-      {cmd:/worlds seeds <world>} lists every seed the world has had (also for a deleted one), newest first, with when and why; click a seed to copy it or to prepare a reset with it.
+      {cmd:/worlds seeds <world>} lists every seed the world has had (also for a deleted one), newest first, with when and why. Click a seed to copy it or to prepare a reset with it.
   - question: Are these commands logged?
     title: Audit
     text: |

@@ -2,7 +2,7 @@ id: worldutils
 title: Switching worlds & dimensions
 summary: "Go to another world with /w, or to the same place in another dimension with /dim."
 intro: |
-  Staff-grade teleporting between worlds. If you can read this, somebody trusts you with it.
+  Staff teleporting between worlds and dimensions.
 icon: COMPASS
 category: Worlds
 order: 10
@@ -17,12 +17,12 @@ sections:
     title: /w
     permission: rainsworldutils.world
     text: |
-      {cmd:/w} lists every loaded world — click one to go. {cmd:/w <world>} takes you there{if:worldutils:remember-last-position}, back where you last stood in that world (or its spawn if you never were){else}, to the world's spawn{/if}.
+      {cmd:/w} lists every loaded world. Click one to go. {cmd:/w <world>} takes you there{if:worldutils:remember-last-position}, back where you last stood in that world (or its spawn if you never were){else}, to the world's spawn{/if}.
   - question: How do I send somebody else?
     title: Sending others
     permission: rainsworldutils.world.others
     text: |
-      {cmd:/w <world> <player or selector>}, for example @a for everybody. You only hear about refusals — not forty lines saying it worked. From the console, say who.
+      {cmd:/w <world> <player or selector>}, for example @a for everybody. You only hear about refusals, not about every success. From the console, say who.
   - question: How do I change dimension?
     title: /dim
     permission: rainsworldutils.dimension
@@ -36,7 +36,7 @@ sections:
   - question: Where will I land?
     title: Landing
     text: |
-      {if:worldutils:safe-arrival}The nearest spot you can stand on without suffocating, falling or burning, searching up to <white>{setting:worldutils:search-radius|count}</white> blocks sideways. If there is none, nobody is moved and you are told.{else}Exactly on the target coordinates — no safe-ground search on this server.{/if}
+      {if:worldutils:safe-arrival}The nearest spot you can stand on without suffocating, falling or burning, searching up to <white>{setting:worldutils:search-radius|count}</white> blocks sideways. If there is none, nobody is moved and you are told.{else}Exactly on the target coordinates, with no search for safe ground on this server.{/if}
       The move is recorded, so {cmd:/back} knows where you came from.
   - question: Do portals work in worlds made here?
     title: Portals
