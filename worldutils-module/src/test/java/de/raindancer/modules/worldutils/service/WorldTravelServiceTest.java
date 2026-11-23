@@ -5,6 +5,7 @@ import de.raindancer.core.world.manage.WorldEntryRules;
 import de.raindancer.core.world.safety.Safety;
 import de.raindancer.core.world.teleport.Travel;
 import de.raindancer.core.world.teleport.Trip;
+import de.raindancer.core.world.teleport.TravelWatcher;
 import de.raindancer.modules.worldutils.WorldUtilsSettings;
 import de.raindancer.modules.worldutils.model.Dimension;
 import de.raindancer.modules.worldutils.store.LastPositions;
@@ -31,6 +32,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 /**
@@ -104,6 +106,23 @@ class WorldTravelServiceTest {
         assertThat(target.getWorld()).isSameAs(farm);
         assertThat(target.getBlockX()).isEqualTo(100);
         assertThat(target.getBlockZ()).isEqualTo(-50);
+    }
+
+    @Test
+    @DisplayName("arriving says nothing: the traveller is standing in the world")
+    void arrivingIsSilent() {
+        World hub = world("hub", World.Environment.NORMAL, 1);
+        when(player.getWorld()).thenReturn(hub);
+        when(positions.in(any(), any())).thenReturn(Optional.empty());
+        when(farm.getSpawnLocation()).thenReturn(new Location(farm, 5, 64, 5));
+
+        service.toWorld(admin, player, farm);
+
+        ArgumentCaptor<TravelWatcher> watcher = ArgumentCaptor.forClass(TravelWatcher.class);
+        verify(travel).go(any(Player.class), any(Location.class), any(Trip.class), watcher.capture());
+        watcher.getValue().arrived(player, new Location(farm, 5, 64, 5), Trip.to("farm"));
+
+        verifyNoInteractions(messages);
     }
 
     @Test

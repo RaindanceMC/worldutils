@@ -4,7 +4,6 @@
 # are filled in before the line is read as MiniMessage, which is why a world name can sit inside a click.
 worldutils:
 
-  arrived: "<gray>You are in <white><world></white>."
   already-there: "<yellow><white><player></white> is already in <white><world></white>."
   already-in-dimension: "<yellow><white><player></white> is already in <white><dimension></white>."
   already-travelling: "<yellow><white><player></white> is already on the way somewhere."

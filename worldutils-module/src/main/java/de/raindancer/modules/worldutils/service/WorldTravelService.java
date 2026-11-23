@@ -175,7 +175,7 @@ public final class WorldTravelService implements IWorldUtilsService {
         });
     }
 
-    /** What the traveller and the sender are told once Travel is done with them. */
+    /** What the sender is told when Travel refuses a trip. Arriving is not announced: the traveller is standing there. */
     private final class Arriving implements TravelWatcher {
 
         private final CommandSender sender;
@@ -184,11 +184,6 @@ public final class WorldTravelService implements IWorldUtilsService {
         private Arriving(CommandSender sender, World world) {
             this.sender = sender;
             this.world = world;
-        }
-
-        @Override
-        public void arrived(Player traveller, Location where, Trip trip) {
-            messages.send(traveller, "worldutils.arrived", "world", world.getName());
         }
 
         @Override

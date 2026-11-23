@@ -22,7 +22,7 @@
     <properties>
         <rainscore.version>2.4.0</rainscore.version>
         <modules-wrapper.version>1.9.0</modules-wrapper.version>
-        <worldutils-module.version>0.6.0</worldutils-module.version>
+        <worldutils-module.version>0.6.1</worldutils-module.version>
     </properties>
 
     <modules>
